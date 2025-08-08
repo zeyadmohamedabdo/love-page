@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Zeyad & Yosh</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -19,7 +21,7 @@
       max-width: 300px;
       height: auto;
     }
-    #questionBox input {
+    #questionBox input, #questionBox textarea {
       padding: 10px;
       font-size: 16px;
       width: 250px;
@@ -38,8 +40,9 @@
       background: url("images/field_background.jpg") no-repeat center center;
       background-size: cover;
       min-height: 100vh;
-      color: white;
+      color: black;
       position: relative;
+      font-family: 'Pacifico', cursive;
     }
     .fade-in {
       animation: fadeIn 2s ease-in-out;
@@ -55,7 +58,7 @@
       img {
         max-width: 80vw;
       }
-      #questionBox input {
+      #questionBox input, #questionBox textarea {
         width: 80vw;
       }
     }
@@ -98,6 +101,13 @@
       0% { transform: translateY(0) rotate(45deg); opacity: 1; }
       100% { transform: translateY(-100vh) rotate(45deg); opacity: 0; }
     }
+    .final-scene-imgs {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
   </style>
 </head>
 <body>
@@ -129,21 +139,33 @@
   <div id="scene3" class="fade-in">
     <div class="hearts" id="heartsContainer"></div>
     <div class="container">
-      <img src="images/zeyad_kneeling.png" alt="Zeyad kneeling" />
-      <img src="images/yosh_queen.png" alt="Yosh queen" />
+      <div class="final-scene-imgs">
+        <img src="images/zeyad_kneeling.png" alt="Zeyad kneeling" style="order: 2;" />
+        <img src="images/yosh_queen.png" alt="Yosh queen" style="order: 1;" />
+      </div>
       <h2>I am in a field of dandelions wishing on every one that you will be mine 🌼❤️</h2>
+      <div id="questionBox">
+        <label>Just write everything you love about Zozo 💌<br>اعتبري دا حاجه تكتبي فيها كل اللي في قلبك عني، الحلو والوحش، كل حاااجه</label><br />
+        <textarea id="finalAnswer" rows="5"></textarea><br />
+        <button onclick="logAnswers()">Send to Zozo</button>
+      </div>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script>
+    let answer1 = "";
+    let answer2 = "";
+
     function nextScene() {
+      answer1 = document.getElementById("answer1").value;
       document.getElementById("scene1").style.display = "none";
       document.getElementById("scene2").style.display = "block";
       confetti();
     }
 
     function finalScene() {
+      answer2 = document.getElementById("answer2").value;
       document.getElementById("scene2").style.display = "none";
       document.getElementById("scene3").style.display = "block";
       generateHearts();
@@ -160,6 +182,14 @@
         setTimeout(() => heart.remove(), 5000);
       }
       setInterval(generateHearts, 3000);
+    }
+
+    function logAnswers() {
+      const final = document.getElementById("finalAnswer").value;
+      console.log("Answer 1:", answer1);
+      console.log("Answer 2:", answer2);
+      console.log("Zozo Message:", final);
+      alert("Thank you my queen 💖");
     }
   </script>
 </body>
