@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zeyad & Yosh</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff0f5;
+      text-align: center;
+      overflow-x: hidden;
+    }
+    .container {
+      padding: 20px;
+    }
+    img {
+      max-width: 300px;
+      height: auto;
+    }
+    #questionBox input {
+      padding: 10px;
+      font-size: 16px;
+      width: 250px;
+      margin-top: 10px;
+    }
+    #questionBox button {
+      padding: 10px 15px;
+      margin-left: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #scene2, #scene3 {
+      display: none;
+    }
+    #scene3 {
+      background: url("images/field_background.jpg") no-repeat center center;
+      background-size: cover;
+      min-height: 100vh;
+      color: white;
+      position: relative;
+    }
+    .fade-in {
+      animation: fadeIn 2s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    audio {
+      display: none;
+    }
+    @media screen and (max-width: 768px) {
+      img {
+        max-width: 80vw;
+      }
+      #questionBox input {
+        width: 80vw;
+      }
+    }
+    .hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 999;
+    }
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(45deg);
+      animation: float 5s linear infinite;
+    }
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+    @keyframes float {
+      0% { transform: translateY(0) rotate(45deg); opacity: 1; }
+      100% { transform: translateY(-100vh) rotate(45deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <audio autoplay loop>
+    <source src="images/background_music.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
+
+  <div class="container fade-in" id="scene1">
+    <img src="images/zeyad_normal.png" alt="Zeyad normal" />
+    <h2>ازيك يا يوش , عامله ايه , انا زوزو وموجود هنا عشان اساعدك واسعدك</h2>
+    <div id="questionBox">
+      <label>Do you love me?</label><br />
+      <input type="text" id="answer1" />
+      <button onclick="nextScene()">Send</button>
+    </div>
+  </div>
+
+  <div class="container fade-in" id="scene2">
+    <img src="images/zeyad_heart_eyes.png" alt="Zeyad love" />
+    <h2>I am so in love with you too, my little pretty queen 🥰👸👸</h2>
+    <div id="questionBox">
+      <label>Do you remember our first day we talked?</label><br />
+      <input type="text" id="answer2" />
+      <button onclick="finalScene()">Send</button>
+    </div>
+  </div>
+
+  <div id="scene3" class="fade-in">
+    <div class="hearts" id="heartsContainer"></div>
+    <div class="container">
+      <img src="images/zeyad_kneeling.png" alt="Zeyad kneeling" />
+      <img src="images/yosh_queen.png" alt="Yosh queen" />
+      <h2>I am in a field of dandelions wishing on every one that you will be mine 🌼❤️</h2>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script>
+    function nextScene() {
+      document.getElementById("scene1").style.display = "none";
+      document.getElementById("scene2").style.display = "block";
+      confetti();
+    }
+
+    function finalScene() {
+      document.getElementById("scene2").style.display = "none";
+      document.getElementById("scene3").style.display = "block";
+      generateHearts();
+    }
+
+    function generateHearts() {
+      const container = document.getElementById("heartsContainer");
+      for (let i = 0; i < 30; i++) {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = 3 + Math.random() * 2 + "s";
+        container.appendChild(heart);
+        setTimeout(() => heart.remove(), 5000);
+      }
+      setInterval(generateHearts, 3000);
+    }
+  </script>
+</body>
+</html>
